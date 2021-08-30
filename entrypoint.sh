@@ -71,7 +71,7 @@ export GITHUB_PROJECT
 echo "GITHUB_PROJECT=${GITHUB_PROJECT}" >> "${GITHUB_ENV}"
 export INPUT_GITHUB_PROJECT="${GITHUB_PROJECT}"
 
-GIT_SHORT_REV="$(printf '%.8s' "${GITHUB_SHA}")"
+GIT_SHORT_REV="$(printf '%.7s' "${GITHUB_SHA}")"
 echo "GIT_SHORT_REV=${GIT_SHORT_REV}" >> "${GITHUB_ENV}"
 echo "::set-output name=git_short_rev::${GIT_SHORT_REV}"
 
