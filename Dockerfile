@@ -22,10 +22,6 @@ RUN set -e \
 	&& python3 -m ensurepip --upgrade \
 	&& python3 -m pip install --upgrade pip \
 	&& python3 -m pip install --upgrade \
-		setuptools==57.5.0 \
-		wheel==0.37.1 \
-		cryptography==3.4.8 \
-		boto3==1.12.49 \
 		awscli==1.18.49 \
 		s3cmd==2.1.0 \
 		credstash==1.17.1 \
