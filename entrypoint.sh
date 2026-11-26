@@ -272,12 +272,20 @@ fi
 
 if test "${INPUT_DESTROY:=false}" = 'true'; then
 	: Terraform Destroy
-	
+
 	if test "${INPUT_REMOVE_R53_RECORD_FROM_STATE:=false}" = 'true'; then
-		: Removing Route53 A record from state
-		terraform state rm aws_route53_record.default || :
+		: Removing Route53 records from state
+
+		# Preserve both the main A record and the ACM DNS validation records.
+		# The validation records are shared by name with other certificates for
+		# the same domain, so deleting them breaks their automatic renewal.
+		terraform state list |
+			grep -E '^aws_route53_record\.(default|cert_record)(\[|$)' |
+			while IFS= read -r r53_record; do
+				terraform state rm "${r53_record}" || :
+			done
 	fi
-	
+
 	terraform destroy \
 		-input=false \
 		-compact-warnings \
